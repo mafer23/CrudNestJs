@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Project } from '../entities/projects.entity';
+import { CreateProjectDto } from 'src/dto/project.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -11,10 +12,12 @@ export class ProjectsService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
+
+
   // Crear un nuevo proyecto
-  async create(createProjectDto: Partial<Project>): Promise<Project> {
+  async create(createProjectDto: CreateProjectDto): Promise<Project> {
     const project = this.projectRepository.create(createProjectDto);
-    return this.projectRepository.save(project);
+    return await this.projectRepository.save(project);
   }
 
   // Obtener todos los proyectos
